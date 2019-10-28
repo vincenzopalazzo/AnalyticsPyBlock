@@ -1,0 +1,8 @@
+
+.idea/
+
+service/__pycache__/
+
+persistence/__pycache__/
+
+model/__pycache__/
