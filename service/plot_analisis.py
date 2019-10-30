@@ -4,7 +4,7 @@ Distributed under the Apache License Version 2.0 software license,
 see https://www.apache.org/licenses/LICENSE-2.0.txt
 """
 import plotly.graph_objects as go
-
+from model.type_script_value import TypescriptValue
 
 class PlotAnalisis:
 
@@ -25,14 +25,14 @@ class PlotAnalisis:
         copy_keys.sort()
         for key in copy_keys:
             value_for_year = data_analisis[key]
-            p2pk_values.append(value_for_year.get_data()['P2PK'])
-            p2pkh_values.append(value_for_year.get_data()['P2PKH'])
-            p2ms_values.append(value_for_year.get_data()['P2MS'])
-            no_standard.append(value_for_year.get_data()['NO_STANDARD'])
-            op_return.append(value_for_year.get_data()['OP_RETURN'])
-            op_p2sh.append(value_for_year.get_data()['P2SH'])
-            op_p2wpkh.append(value_for_year.get_data()['P2WPKH'])
-            op_p2wsh.append(value_for_year.get_data()['P2WSH'])
+            p2pk_values.append(value_for_year.get_data()[TypescriptValue.TYPE_P2PK])
+            p2pkh_values.append(value_for_year.get_data()[TypescriptValue.TYPE_P2PKH])
+            p2ms_values.append(value_for_year.get_data()[TypescriptValue.TYPE_P2MS])
+            no_standard.append(value_for_year.get_data()[TypescriptValue.TYPE_NO_STANDARD])
+            op_return.append(value_for_year.get_data()[TypescriptValue.TYPE_OP_RETURN])
+            op_p2sh.append(value_for_year.get_data()[TypescriptValue.TYPE_P2SH])
+            op_p2wpkh.append(value_for_year.get_data()[TypescriptValue.TYPE_P2WPKH])
+            op_p2wsh.append(value_for_year.get_data()[TypescriptValue.TYPE_P2WSH])
 
         fig.add_trace(go.Scatter(x=copy_keys, y=p2pk_values, mode='lines+markers', name='P2PK',
                                  line_color='rgb(153, 84, 187)'))

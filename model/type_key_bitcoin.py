@@ -6,18 +6,10 @@ see https://www.apache.org/licenses/LICENSE-2.0.txt
 import logging
 import datetime
 from model.data_trype_script_analisis import DataTypeScriptAnalisis
+from model.type_script_value import TypescriptValue
 
 
 class TypeKeyBitcoin:
-    TYPE_P2PK = 'P2PK'
-    TYPE_P2PKH = 'P2PKH'
-    TYPE_P2MS = 'P2PMS'
-    TYPE_P2SH = 'P2PSH'
-    TYPE_P2WPKH = 'P2WPPKH'
-    TYPE_P2WSH = 'P2WPSH'
-    TYPE_NO_STANDARD = 'NO_STANDARD'
-    TYPE_OP_RETURN = 'OP_RETURN'
-
     OP_CODE_MAP = {
         int('0x00', 16): 'OP_0',
         int('0x76', 16): 'OP_DUP',
@@ -54,7 +46,7 @@ class TypeKeyBitcoin:
 
     def check_ty_script(self, hex_script):
         if len(hex_script) is 0:
-            return self.TYPE_NO_STANDARD
+            return TypescriptValue.TYPE_NO_STANDARD
         op_code_to_start = int(hex_script[0: 2], 16)
         op_code_end = int(hex_script[len(hex_script) - 2: len(hex_script)], 16)
         op_code_to_start_str = self.OP_CODE_MAP.get(op_code_to_start)
@@ -67,34 +59,40 @@ class TypeKeyBitcoin:
         if (op_code_to_start_str is 'OP_0' or op_code_end_str is 'OP_CHECKSIG') and \
                 (size_control_program is (130 + 2) or size_control_program is (66 + 2)):
             logging.debug('P2PK FOUND')
-            return self.TYPE_P2PK
+            return TypescriptValue.TYPE_P2PK
         elif op_code_to_start_str is 'OP_DUP':
             logging.debug('P2PKH FOUND')
-            return self.TYPE_P2PKH
+            return TypescriptValue.TYPE_P2PKH
         elif op_code_end_str is 'OP_CHECKMULTISIG':
             logging.debug('P2MS FOUND')
-            return self.TYPE_P2MS
+            return TypescriptValue.TYPE_P2MS
         elif op_code_to_start_str is 'OP_RETURN':
             logging.debug('OP_RETURN FOUND')
-            return self.TYPE_OP_RETURN
+            return TypescriptValue.TYPE_OP_RETURN
         elif op_code_to_start_str is 'OP_HASH160':
             logging.debug('P2SH found')
-            return self.TYPE_P2SH
+            return TypescriptValue.TYPE_P2SH
         elif self.is_pay_to_witness_public_key_hash(op_code_to_start_str, hex_script):
             logging.debug('P2WPKH found')
-            return self.TYPE_P2WPKH
+            return TypescriptValue.TYPE_P2WPKH
         elif self.is_pay_to_witness_script_hash(op_code_to_start_str, hex_script):
             logging.debug('P2WSH found')
-            return self.TYPE_P2WSH
+            return TypescriptValue.TYPE_P2WSH
         else:
-            return self.TYPE_NO_STANDARD
+            return TypescriptValue.TYPE_NO_STANDARD
 
-    #In the method I used the OP_0 but not is the OP_code but a value for define the script version of the script
-    #this is a solution, but mustn't confused with the OP_code start.
+    # In the method I used the OP_0 but not is the OP_code but a value for define the script version of the script
+    # this is a solution, but mustn't confused with the OP_code start.
     def is_pay_to_witness_public_key_hash(self, op_code_to_start_string, control_program):
         return (op_code_to_start_string is 'OP_0') and (len(control_program) is 22 * 2)
 
     # In the method I used the OP_0 but not is the OP_code but a value for define the script version of the script
     # this is a solution, but mustn't confused with the OP_code start.
     def is_pay_to_witness_script_hash(self, op_code_to_start_string, control_program):
-        return (op_code_to_start_string is 'OP_0') and (len(control_program) is 30 * 2)
+        """
+        Why 34 byte and not 30 byte? because the hex script is component to the
+        - 0: Version script (2 byte)
+        - OP_PUSH_XX_BYTES: Operator for push the byte inside the stack (2 byte)
+        - The control program. (30 byte)
+        """
+        return (op_code_to_start_string is 'OP_0') and (len(control_program) is 34 * 2)
