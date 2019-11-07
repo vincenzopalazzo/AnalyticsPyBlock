@@ -8,7 +8,7 @@ from interface import Interface
 
 class IDAOFile(Interface):
 
-    def save(self, path_single_file):
+    def save(self, path_single_file, object):
         pass
 
     def load(self, path_single_file):

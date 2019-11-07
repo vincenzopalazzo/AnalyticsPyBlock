@@ -50,13 +50,13 @@ class PlotAnalisis:
                                  line_color='rgb(61, 176, 23)'))
 
         fig.add_trace(go.Scatter(x=copy_keys, y=op_p2sh, mode='lines+markers', name='P2SH',
-                                 line_color='rgb(255, 216, 190)'))
+                                 line_color='rgb(38, 198, 218)'))
 
         fig.add_trace(go.Scatter(x=copy_keys, y=op_p2wsh, mode='lines+markers', name='P2WSH',
-                                 line_color='rgb(201, 235, 190)'))
+                                 line_color='rgb(233, 30, 99)'))
 
-        fig.add_trace(go.Scatter(x=copy_keys, y=op_p2wsh, mode='lines+markers', name='P2WPKH',
-                                 line_color='rgb(255, 184, 200)'))
+        fig.add_trace(go.Scatter(x=copy_keys, y=op_p2wpkh, mode='lines+markers', name='P2WPKH',
+                                 line_color='rgb(55, 71, 79)'))
 
         # Information graph
         fig.update_layout(title='The estimate of the type of Script PubKey utilized in the Bitcoin Blockchain',

@@ -7,13 +7,16 @@ import logging
 from interface import implements
 from .dao_interface import IDAOFile
 from rapidjson import load
+from rapidjson import dump
 
 
 class DAOJson(implements(IDAOFile)):
 
-    def save(self, path_single_file):
+    def save(self, path_single_file, object):
         logging.debug('The path for save is %s, I\' not enable for run this method sorry')
-        return None
+        file = open(path_single_file, "a")
+        dump(object, file)
+        file.close()
 
     def load(self, path_single_file):
         file = open(path_single_file, "r", encoding="utf-8")
