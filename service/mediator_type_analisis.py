@@ -5,6 +5,7 @@ see https://www.apache.org/licenses/LICENSE-2.0.txt
 """
 import logging
 from service.address_type_command import AddressTypeCommand
+from service._test_hash_transaction_with_rpc import HashTransactionTestWithBitcoinCore
 
 
 class MediatorCommand:
@@ -15,4 +16,7 @@ class MediatorCommand:
         logging.debug('Key command is %s', key_command)
         if key_command == 'address_type':
             command = AddressTypeCommand()
+            command.do_command(data_dir)
+        if key_command == 'test_hash_rawtx':
+            command = HashTransactionTestWithBitcoinCore()
             command.do_command(data_dir)
