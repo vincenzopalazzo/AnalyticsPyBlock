@@ -6,6 +6,7 @@ see https://www.apache.org/licenses/LICENSE-2.0.txt
 import plotly.graph_objects as go
 from model.type_script_value import TypescriptValue
 
+
 class PlotAnalisis:
 
     def plot(self, data_analisis):
@@ -59,7 +60,7 @@ class PlotAnalisis:
                                  line_color='rgb(55, 71, 79)'))
 
         # Information graph
-        fig.update_layout(title='The estimate of the type of Script PubKey utilized in the Bitcoin Blockchain',
+        fig.update_layout(title='The estimate the type of Script PubKey utilized in the Bitcoin Blockchain',
                           xaxis_title='Year',
-                          yaxis_title='Value')
+                          yaxis_title='Number of occurrences')
         fig.show()

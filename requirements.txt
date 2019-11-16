@@ -1,3 +1,4 @@
 plotly==4.2.1
 python-rapidjson==0.8.0
 python-interface==1.5.1
+python-bitcoinrpc
