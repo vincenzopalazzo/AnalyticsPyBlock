@@ -6,3 +6,5 @@ service/__pycache__/
 persistence/__pycache__/
 
 model/__pycache__/
+
+service/bitcoincore/__pycache__/
