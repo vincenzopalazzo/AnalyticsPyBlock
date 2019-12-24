@@ -15,9 +15,15 @@ class RPCBitcoinCoreCommand:
         if(command is None or hash is None):
             raise Exception('The command or the hash is null')
         try:
-            tx = self.rpc_connection.getrawtransaction(hash)
-            logging.debug(tx)
-            return "OK"
+            if command == 'getrawtransaction':
+                tx = self.rpc_connection.getrawtransaction(hash)
+                logging.debug(tx)
+                return "OK"
+            elif command == 'getblock':
+                blc = self.rpc_connection.getblock(hash)
+                logging.debug(blc)
+                return "OK"
         except JSONRPCException as jsone:
             logging.warning('Exception generated: ' + str(jsone))
             return hash
+        return "KO"

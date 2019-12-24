@@ -11,7 +11,7 @@ from persistence.dao_json import DAOJson
 from .bitcoincore.rpc_command_bitcoincore import RPCBitcoinCoreCommand
 
 
-class HashTransactionTestWithBitcoinCore(implements(ICommand)):
+class HashBlockTestWithBitcoinCore(implements(ICommand)):
 
     def __init__(self) -> None:
         super().__init__()
@@ -23,9 +23,9 @@ class HashTransactionTestWithBitcoinCore(implements(ICommand)):
         files_blk = os.listdir(data_dir)
         dao_json = DAOJson()
 
-        lenght = len([iq for iq in os.scandir(data_dir)])
+        length = len([iq for iq in os.scandir(data_dir)])
         start = 0
-        self.printProgressBar(start, lenght, length=50)
+        self.printProgressBar(start, length, length=50)
         for file_blk in files_blk:
             logging.debug('****** Files BLK.json ******')
             logging.debug(file_blk)
@@ -34,21 +34,19 @@ class HashTransactionTestWithBitcoinCore(implements(ICommand)):
                 object_json = dao_json.load(path_file)
                 logging.debug('***** JSON Object *****')
                 logging.debug('Num blocks %i', len(object_json['blocks']))
-                blockCount = 0
+                blockCount = 1
                 for block in object_json['blocks']:
-                    indexTx = 0
-                    for rawTx in block['rawTransactions']:
-                       result = self.rpcCommand.callCommand('getrawtransaction', rawTx['hashRawTransaction'])
-                       if result != "OK":
-                           logging.warning('At the file %s inside the the block %s the hash %s is not valid for indextx %s', file_blk,
-                                           block['hashBlock'], rawTx['hashRawTransaction'], indexTx)
-                           logging.warning(blockCount)
-                       else:
-                           logging.debug(rawTx['hashRawTransaction'])
-                       indexTx += 1
+                    result = self.rpcCommand.callCommand('getblock', block['hashBlock'])
+                    if result != "OK":
+                        logging.warning(len(object_json['blocks']))
+                        logging.warning(
+                            'At the file %s inside the the block with hash %s is not valid', file_blk, block['hashBlock'])
+                        logging.warning(blockCount)
+                    else:
+                        logging.debug(block['hashBlock'])
                     blockCount += 1
             start += 1
-            self.printProgressBar(start, lenght, length=50)
+            self.printProgressBar(start, length, length=50)
 
 
     # Print iterations progress create an submodule separate
