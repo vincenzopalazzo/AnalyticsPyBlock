@@ -9,6 +9,10 @@ such as the analysis of transaction type used in Bitcoin Blockchain (JSON versio
 
 An example of Analysis is available [here](https://vincenzopalazzo.github.io/AnalyticsPyBlock/) and it is update with the data in March 23 2021.
 
+Take a look also the posts on Bitcoin subreddit; the list is available below:
+
+- 2019 - 2020: [Type of Script PubKey used before the Segregated Witness](https://www.reddit.com/r/Bitcoin/comments/dnvxdy/type_of_script_pubkey_used_before_the_segregated/)
+
 ## Build
 
 For install dependence
