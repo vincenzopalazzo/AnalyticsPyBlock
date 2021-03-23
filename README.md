@@ -1,5 +1,7 @@
 AnalyticsPyBlock
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vincenzopalazzo/AnalyticsPyBlock/AnalyticsPyBlock%20unittest?style=for-the-badge)
+
 ## Introductions
 
 Simple analysis tools that work over the result of SpyCblock https://github.com/vincenzopalazzo/SpyCblock and make simple analysis, 
